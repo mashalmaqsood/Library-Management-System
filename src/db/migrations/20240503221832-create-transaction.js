@@ -9,11 +9,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      transaction_date: {
+      transactionDate: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      transaction_type: {
+      transactionType: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -21,11 +21,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      loanId:{
+      copyId:{
         type: Sequelize.INTEGER,
         allowNull: false,
           references: {
-            model: 'Loans',
+            model: 'Copies',
+            key: 'id',
+         }
+      },
+      memberId:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+          references: {
+            model: 'Members',
             key: 'id',
          }
       },

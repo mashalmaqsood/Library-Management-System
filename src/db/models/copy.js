@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Copy extends Model {
     /**
@@ -11,25 +9,35 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.Loan,{
-        foreignKey : 'copyId',
-        as : "copyloans"
-      })
-      this.belongsTo(models.Book,{
+      this.hasMany(models.Loan, {
         foreignKey: "copyId",
-        as: "book"
-      })
-      this.belongsTo(models.Member,{
-        foreignKey: "memberId",
-        as: "member"
-      })
+        as: "copyloans",
+      });
+      this.belongsTo(models.Book, {
+        foreignKey: "bookId",
+        as: "book",
+      });
+      this.belongsTo(models.Transaction, {
+        foreignKey: "copyId",
+        as: "copytransaction",
+      });
     }
   }
-  Copy.init({
-    status: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Copy',
-  });
+  Copy.init(
+    {
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      bookId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Copy",
+    }
+  );
   return Copy;
 };

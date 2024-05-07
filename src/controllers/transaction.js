@@ -1,0 +1,85 @@
+const { Transaction } = require("../db/models");
+
+const createTransaction = async (req, res) => {
+  const { transactionDate, transactionType, loanId, amount } = req.body;
+  try {
+    await Transaction.create({
+      transactionDate,
+      transactionType,
+      loanId,
+      amount,
+    });
+    return res
+      .status(200)
+      .send({ message: "Transaction created successfully." });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: "Couldn't create transaction." });
+  }
+};
+
+const updateTransaction = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Transaction.update(req.body, {
+      where: { id },
+    });
+    return res.json({ message: "Transaction details updated successfully" });
+  } catch (err) {
+    return res.json({ message: "Couldn't update transaction details." });
+  }
+};
+
+const getAllTransactions = async (req, res) => {
+  try {
+    const transactions = await Transaction.findAll();
+    return res.json(transactions);
+  } catch (err) {
+    console.log("error", err);
+    return res.status(500).send({ message: "Couldn't retrieve transactions." });
+  }
+};
+
+const getTransactionById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const transaction = await Transaction.findOne({
+      where: { id },
+    });
+    if (!transaction) {
+      return res
+        .status(404)
+        .send({ message: `Transaction with id ${id} not found.` });
+    }
+    return res.json(transaction);
+  } catch (err) {
+    res.status(500).send({ message: "Couldn't retrieve the transaction" });
+  }
+};
+
+const deleteTransaction = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const transaction = await Transaction.findOne({
+      where: { id },
+    });
+    if (!transaction) {
+      return res
+        .status(404)
+        .send({ message: `Transaction with id ${id} not found.` });
+    }
+    await transaction.destroy();
+    return res.json({ message: "Transaction deleted successfully" });
+  } catch (err) {
+    console.log("error", err);
+    return res.json({ message: "Couldn't delete the transaction." });
+  }
+};
+
+module.exports = {
+    createTransaction,
+    updateTransaction,
+    getAllTransactions,
+    getTransactionById,
+    deleteTransaction
+};

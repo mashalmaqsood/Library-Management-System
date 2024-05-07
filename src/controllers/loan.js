@@ -1,0 +1,79 @@
+const { Loan } = require("../db/models");
+
+const createLoan = async (req, res) => {
+  const { loanDate, returnDate, memberId, copyId } = req.body;
+  try {
+    await Loan.create({
+      loanDate,
+      returnDate,
+      memberId,
+      copyId,
+    });
+    return res.status(200).send({ message: "Loan created successfully." });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: "Couldn't create loan." });
+  }
+};
+
+const updateLoan = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Loan.update(req.body, {
+      where: { id },
+    });
+    return res.json({ message: "Loan details updated successfully" });
+  } catch (err) {
+    return res.json({ message: "Couldn't update loan details." });
+  }
+};
+
+const getAllLoans = async (req, res) => {
+  try {
+    const loans = await Loan.findAll();
+    return res.json(loans);
+  } catch (err) {
+    console.log("error", err);
+    return res.status(500).send({ message: "Couldn't retrieve loans." });
+  }
+};
+
+const getLoanById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const loan = await Loan.findOne({
+      where: { id },
+    });
+    if (!loan) {
+      return res.status(404).send({ message: `Loan with id ${id} not found.` });
+    }
+    return res.json(loan);
+  } catch (err) {
+    res.status(500).send({ message: "Couldn't retrieve the loan" });
+  }
+};
+
+const deleteLoan = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const loan = await Loan.findOne({
+      where: { id },
+    });
+    if (!loan) {
+      return res.status(404).send({ message: `Loan with id ${id} not found.` });
+    }
+    await loan.destroy();
+    return res.json({ message: "Loan deleted successfully" });
+  } catch (err) {
+    console.log("error", err);
+    return res.json({ message: "Couldn't delete the loan." });
+  }
+};
+
+module.exports = {
+  createLoan,
+  updateLoan,
+  getAllLoans,
+  getLoanById,
+  deleteLoan,
+};
