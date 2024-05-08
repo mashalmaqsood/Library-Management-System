@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
+  
   Loan.init(
     {
       loanDate: {

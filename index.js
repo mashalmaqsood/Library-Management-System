@@ -20,11 +20,6 @@ app.use('/api/loan',loan);
 app.use('/api/member',member);
 app.use('/api/transaction',transaction);
 
+module.exports=app
 
-app.listen(PORT, async () => {
-  console.log(
-    `Library management system backend(server) listening at http://localhost:${PORT}`
-  );
-  await sequelize.authenticate();
-  console.log("Database connected!");
-});
+

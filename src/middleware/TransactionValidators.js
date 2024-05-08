@@ -1,29 +1,22 @@
 const { body, param, validationResult } = require("express-validator");
 
-const ValidateCreateBook = [
-  body("id")
+const ValidateCreateTransaction = [
+  // body("id").isInt().optional().withMessage("The id should be an integer."),
+  body("transactionDate")
+    .isISO8601()
+    .withMessage("The transaction date is must and should be a date."),
+  body("transactionType")
+    .isString()
+    .withMessage("The transaction type is must and should be a string."),
+  body("amount")
     .isInt()
-    .optional()
-    .withMessage("The id should be an integer."),
-  body("author")
-    .isString()
-    .withMessage("The title is must and should be a string."),
-  body("ISBN")
-    .isString()
-    .withMessage("The ISBN is must and should be a string."),
-  body("genre")
-    .isString()
-    .withMessage("The genre should be a string."),
-  body("publishedYear")
+    .withMessage("The amount is must and it should be an integer."),
+  body("copyId")
     .isInt()
-    .withMessage("The published year is must and should be an integer."),
-  body("genre")
-    .isString()
-    .optional()
-    .withMessage("The genre should be a string."),
-  body("publisher")
-    .isString()
-    .withMessage("The publisher should be a string."),
+    .withMessage("The copy id is must and it should be an integer."),
+  body("memberId")
+    .isInt()
+    .withMessage("The member id is must and it should be an integer."),
   body("createdAt")
     .isDate()
     .optional()
@@ -44,31 +37,23 @@ const ValidateCreateBook = [
   },
 ];
 
-const ValidateUpdateBook = [
-    body("id")
-    .isInt()
-    .optional()
-    .withMessage("The id should be an integer."),
-  body("author")
-    .isString()
-    .withMessage("The title is must and should be a string."),
-  body("ISBN")
-    .isString()
-    .optional()
-    .withMessage("The ISBN should be a string."),
-  body("genre")
+const ValidateUpdateTransaction = [
+  body("id").isInt().optional().withMessage("The id should be an integer."),
+  body("transactionDate")
+    .isDate().optional()
+    .withMessage("The transaction date should be a date."),
+  body("transactionType")
     .isString().optional()
-    .withMessage("The genre should be a string."),
-  body("publishedYear")
+    .withMessage("The transaction type should be a string."),
+  body("amount")
     .isInt().optional()
-    .withMessage("The published year should be an integer."),
-  body("genre")
-    .isString()
-    .optional()
-    .withMessage("The genre should be a string."),
-  body("publisher")
-    .isString().optional()
-    .withMessage("The publisher should be a string."),
+    .withMessage("The amount should be an integer."),
+  body("copyId")
+    .isInt().optional()
+    .withMessage("The copy id should be an integer."),
+  body("memberId")
+    .isInt().optional()
+    .withMessage("The member id should be an integer."),
   body("createdAt")
     .isDate()
     .optional()
@@ -103,7 +88,7 @@ const ValidateIdInt = [
 ];
 
 module.exports = {
-  ValidateCreateBook,
-  ValidateUpdateBook,
+  ValidateCreateTransaction,
+  ValidateUpdateTransaction,
   ValidateIdInt,
 };

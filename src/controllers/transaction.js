@@ -1,13 +1,14 @@
 const { Transaction } = require("../db/models");
 
 const createTransaction = async (req, res) => {
-  const { transactionDate, transactionType, loanId, amount } = req.body;
+  const { transactionDate, transactionType, amount ,copyId, memberId} = req.body;
   try {
     await Transaction.create({
       transactionDate,
       transactionType,
-      loanId,
       amount,
+      copyId,
+      memberId,
     });
     return res
       .status(200)
