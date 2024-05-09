@@ -19,6 +19,14 @@ const createLoan = async (req, res) => {
 const updateLoan = async (req, res) => {
   const { id } = req.params;
   try {
+    const loan = await Loan.findOne({
+      where: { id },
+    });
+    if(!loan){
+      return res
+      .status(400)
+      .json({ message: "There isn't any loan of this id exists." });
+    }
     await Loan.update(req.body, {
       where: { id },
     });
@@ -60,7 +68,7 @@ const deleteLoan = async (req, res) => {
       where: { id },
     });
     if (!loan) {
-      return res.status(404).send({ message: `Loan with id ${id} not found.` });
+      return res.status(404).send({ message: "There isn't any Loan of this id exists."});
     }
     await loan.destroy();
     return res.json({ message: "Loan deleted successfully" });

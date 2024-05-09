@@ -13,10 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "memberId",
         as: "member",
       });
-      this.hasMany(models.Transaction, {
-        foreignKey: "LoanId",
-        as: "transactions",
-      });
+      
       this.belongsTo(models.Copy, {
         foreignKey: "copyId",
         as: "loanCopy",

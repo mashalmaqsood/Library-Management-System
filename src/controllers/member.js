@@ -23,6 +23,14 @@ const createMember = async (req, res) => {
 const updateMember = async (req, res) => {
   const { id } = req.params;
   try {
+    const member = await Member.findOne({
+      where: { id },
+    });
+    if(!member){
+      return res
+      .status(400)
+      .json({ message: "There isn't any member of this id exists." });
+    }
     await Member.update(req.body, {
       where: { id },
     });
@@ -68,7 +76,7 @@ const deleteMember = async (req, res) => {
     if (!member) {
       return res
         .status(404)
-        .send({ message: `Member with id ${id} not found.` });
+        .send({ message: "There isn't any member of this id exists."});
     }
     await member.destroy();
     return res.json({ message: "Member deleted successfully" });

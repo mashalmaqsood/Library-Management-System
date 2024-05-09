@@ -22,6 +22,14 @@ const createTransaction = async (req, res) => {
 const updateTransaction = async (req, res) => {
   const { id } = req.params;
   try {
+    const transaction = await Transaction.findOne({
+      where: { id },
+    });
+    if(!transaction){
+      return res
+      .status(400)
+      .json({ message: "There isn't any transaction of this id exists." });
+    }
     await Transaction.update(req.body, {
       where: { id },
     });
@@ -50,7 +58,7 @@ const getTransactionById = async (req, res) => {
     if (!transaction) {
       return res
         .status(404)
-        .send({ message: `Transaction with id ${id} not found.` });
+        .send({ message: "There isn't any transaction of this id exists." });
     }
     return res.json(transaction);
   } catch (err) {
@@ -67,7 +75,7 @@ const deleteTransaction = async (req, res) => {
     if (!transaction) {
       return res
         .status(404)
-        .send({ message: `Transaction with id ${id} not found.` });
+        .send({ message: "There isn't any transaction of this id exists."});
     }
     await transaction.destroy();
     return res.json({ message: "Transaction deleted successfully" });

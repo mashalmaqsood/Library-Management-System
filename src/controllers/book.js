@@ -26,12 +26,20 @@ const updateBook = async (req, res) => {
   const { id } = req.params;
   console.log("id", id);
   try {
+    const book = await Book.findOne({
+      where: { id },
+    });
+    if(!book){
+      return res
+      .status(400)
+      .json({ message: "There isn't any Book of this id exists." });
+    }
     await Book.update(req.body, {
       where: { id },
     });
-    return res.json({ message: "Book details updated successfully" });
+    return res.status(200).send({ message: "Book details updated successfully" });
   } catch (err) {
-    return res.json({ message: "Couldn't update book details." });
+    return res.status(500).send({ message: "Couldn't update book details." });
   }
 };
 
@@ -68,13 +76,13 @@ const deleteBook = async (req, res) => {
       where: { id },
     });
     if (!book) {
-      return res.status(404).send({ message: `Book with id ${id} not found.` });
+      return res.status(404).send({ message: "There isn't any Book of this id exists." });
     }
     await book.destroy();
     return res.json({ message: "Book deleted successfully" });
   } catch (err) {
     console.log("error", err);
-    return res.json({ message: "Couldn't delete the book." });
+    return res.status(400).json({ message: "Couldn't delete the book." });
   }
 };
 

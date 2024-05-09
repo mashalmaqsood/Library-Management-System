@@ -5,9 +5,12 @@ const ValidateCreateBook = [
     .isInt()
     .optional()
     .withMessage("The id should be an integer."),
-  body("author")
+    body("title")
     .isString()
     .withMessage("The title is must and should be a string."),
+  body("author")
+    .isString()
+    .withMessage("The author is must and should be a string."),
   body("ISBN")
     .isString()
     .withMessage("The ISBN is must and should be a string."),
@@ -49,9 +52,12 @@ const ValidateUpdateBook = [
     .isInt()
     .optional()
     .withMessage("The id should be an integer."),
-  body("author")
+    body("title")
     .isString()
     .withMessage("The title is must and should be a string."),
+  body("author")
+    .isString().optional()
+    .withMessage("The aathor is must and should be a string."),
   body("ISBN")
     .isString()
     .optional()

@@ -9,17 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Loan, {
-        foreignKey: "loanId",
-        as: "loan",
-      });
+
       this.belongsTo(models.Copy, {
         foreignKey: "copyId",
         as: "copytransaction",
       });
-      
     }
   }
+  
   Transaction.init(
     {
       transactionDate: { type: DataTypes.DATE, allowNull: false },

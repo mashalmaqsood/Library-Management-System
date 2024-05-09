@@ -13,10 +13,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "copyId",
         as: "copyloans",
       });
+
       this.belongsTo(models.Book, {
         foreignKey: "bookId",
         as: "book",
       });
+      
       this.hasMany(models.Transaction, {
         foreignKey: "copyId",
         as: "copytransaction",
