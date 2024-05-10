@@ -16,18 +16,18 @@ The Library Management System is built to manage the core functionalities requir
 
 ## Features:
 
-Books: Information about the library's books, such as title, author, genre, etc.
-Copies: Details about specific copies of each book, including status and the book it's associated with.
-Loans: Tracks loans to members, with loan and return dates.
-Transactions: Records borrowing and returning events.
-Members: Information about library members, including their personal details such as name, address, contact information other relevant data.
+* Books: Information about the library's books, such as title, author, genre, etc.
+* Copies: Details about specific copies of each book, including status and the book it's associated with.
+* Loans: Tracks loans to members, with loan and return dates.
+* Transactions: Records borrowing and returning events.
+* Members: Information about library members, including their personal details such as name, address, contact information other relevant data.
 
 ## Technologies Used:
 
-Node.js
-Express.js
-MySQL database
-jest for testing endpoints
+* Node.js
+* Express.js
+* MySQL database
+* Jest for testing endpoints
 
 ## .env File Setup:
 
